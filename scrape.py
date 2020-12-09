@@ -45,6 +45,9 @@ print(subtext[0])
 # the above print statement can be chained as well
 print(subtext[0].get('id'))
 
+def sort_stories_votes(hnlist):
+    return sorted(hnlist, key=lambda k:k['votes'], reverse=True)
+
 def create_custtom_hn(links, votes):
     hn = []
     for idx, item in enumerate(links):
@@ -55,6 +58,6 @@ def create_custtom_hn(links, votes):
             points = int(vote[0].getText().replace('points', ''))
             if points > 99:
                 hn.append({'title': title, 'link': href, 'votes': points})
-    return hn
+    return sort_stories_votes(hn)
 
 pprint.pprint(create_custtom_hn(links, subtext))
