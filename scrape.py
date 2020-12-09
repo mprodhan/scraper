@@ -6,10 +6,12 @@ import pprint
 
 
 res = requests.get('https://news.ycombinator.com/news')
+res2 = requests.get('https://news.ycombinator.com/news?p=2')
 # print(res) gives a "Response [200]"
 print(res)
 # print(res.text)
 soup = BeautifulSoup(res.text, 'html.parser')
+soup2 = BeautifulSoup(res2.text, 'html.parser')
 # print(soup)
 # print(soup) will give you all of the html elements parsed out of the text from the source.
 
@@ -41,6 +43,13 @@ soup = BeautifulSoup(res.text, 'html.parser')
 
 links = soup.select('.storylink')
 subtext = soup.select('.subtext')
+
+links2 = soup2.select('.storylink')
+subtext2 = soup2.select('.subtext')
+
+mega_links = links + links2
+mega_subtext = subtext + subtext2
+
 print(subtext[0])
 # the above print statement can be chained as well
 print(subtext[0].get('id'))
@@ -61,3 +70,6 @@ def create_custtom_hn(links, votes):
     return sort_stories_votes(hn)
 
 pprint.pprint(create_custtom_hn(links, subtext))
+# Tech Debt:Need to be able to call create_custom_hn(mega_links, mega_subtext)
+# This resolution would be able to bind pages 1 and 2. 
+# However, a better code would be to dynamically list from all pages.
